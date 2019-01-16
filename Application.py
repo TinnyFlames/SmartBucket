@@ -10,7 +10,7 @@ class Application:
         else:
             self.classifier = Classification(config.IMG_PATH, img_content=img_content)
 
-        self.search_engine = Search
+        self.search_engine = Search()
 
         self.speaker = None
 
