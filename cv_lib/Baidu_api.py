@@ -8,9 +8,9 @@ from cv_lib.base import Base
 class BaiduApi(Base):
     def __init__(self):
         super().__init__()
-        self.APP_ID = secure.DU_API_ID
-        self.API_KEY = secure.DU_API_KEY
-        self.SECRET_KEY = secure.DU_SECRET_KEY
+        self.APP_ID = secure.DU_CV_API_ID
+        self.API_KEY = secure.DU_CV_API_KEY
+        self.SECRET_KEY = secure.DU_CV_SECRET_KEY
         # this is the source object to be wrapped
         self.baidu_client = AipImageClassify(self.APP_ID, self.API_KEY, self.SECRET_KEY)
 

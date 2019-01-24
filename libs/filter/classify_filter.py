@@ -23,7 +23,7 @@ class BaiduFilter:
         :param raw_data:百度api返回的原始数据，默认为字典形式
         :return: 返回一个字段过滤后的字典
         """
-        if raw_data['result_num'] and int(raw_data['result_num']) > 0:
+        if 'result_num' in raw_data.keys() and int(raw_data['result_num']) > 0:
             result_array = raw_data['result']
             highest_result = cls.get_highest_result(result_array)
             cls.result['score'] = highest_result['score']

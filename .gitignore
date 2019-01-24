@@ -109,3 +109,7 @@ secure.py
 # 忽略项目的SSH安全文件
 sshkey
 sshkey.pub
+
+*.idea/*
+
+*.mp3
