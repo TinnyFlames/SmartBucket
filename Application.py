@@ -1,6 +1,7 @@
 import config
 from Classification import Classification
 from HardWare.Camera import Camera
+from Model.edu_info import EduInfo
 from Model.type import Search
 
 
@@ -44,30 +45,36 @@ class Application:
         self.camera.take_picture()
         self.classify_result = self.classifier.classify()
 
+    def _get_final_result(self):
+        self.garbage_tag = self.search_engine.search(self.classify_result['keyword'])
+        self.e = EduInfo(self.classify_result['keyword'])
+        result = self.e.get_info()
+        result['garbage_tag'] = self.garbage_tag
+        return result
+
     def classify_simple_edition(self):
         self._take_picture_and_classify()
 
         if self._check_score(self.classify_result['score']):
-            self.garbage_tag = self.search_engine.search(self.classify_result['keyword'])
-            print(self.classify_result)
-            print(self.garbage_tag)
+            result = self._get_final_result()
         else:
             while self.try_time < config.MAX_ROTATE_TIME:
                 print('旋转台第{}次转动'.format(str(self.try_time)))
                 print("此处省略一些代码")
+
+                """TO DO LIST
+                此处应该实现旋转台旋转代码
+                """
+
                 self._take_picture_and_classify()
                 self.try_time += 1
                 if self._check_score(self.classify_result['score']):
                     break
             if self._check_score(self.classify_result['score']):
-                self.garbage_tag = self.search_engine.search(self.classify_result['keyword'])
+                result = self._get_final_result()
 
-        return {
-            'garbage_tag': self.garbage_tag,
-            'garbage_label': self.classify_result['keyword'],
-            'edu_resource_type': "text",
-            'edu_resource_content': None
-        }
+        self.try_time = 0
+        return result
 
 
 if __name__ == '__main__':
